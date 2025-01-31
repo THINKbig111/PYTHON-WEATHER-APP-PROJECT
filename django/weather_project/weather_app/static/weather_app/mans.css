@@ -1,0 +1,550 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Arial', sans-serif;
+    background: url("/static/weather_app/clear.jpg");
+}
+
+/* Navigation Bar Styling */
+nav {
+    display: flex;
+    background-color: #1a1a1a;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    color: #fff;
+}
+.user-welcome{
+    margin-right:30px;
+    padding:10px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+}
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 20px;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+}
+
+nav ul li h1 {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+nav ul li img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.ad{
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+nav ul li a:hover {
+    background-color: #333;
+}
+
+nav > div {
+    display: flex;
+    gap: 10px;
+}
+
+nav > div input {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px 0 0 10px;
+    width: 300px;
+}
+
+nav > div button {
+    background: #4b4848;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+nav > div button:hover {
+    background-color: #333;
+}
+
+/* Search Section Styling */
+#searchSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    width: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input[type="search"] {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 25px 0 0 25px;
+    flex-grow: 1;
+}
+
+.search-bar button {
+    background-color: #4b4848;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #333;
+}
+
+/* Main Body Styling */
+body {
+    background-image: url("/static/weather_app/clear.jpg");
+background-size: cover;
+background-repeat: no-repeat;
+
+}
+
+/* Day and Time Display */
+#current_Day_Time {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60rem;
+    padding: 30px;
+    border-radius: 18px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+/* Weather Container */
+.container {
+    display: flex;
+    justify-content: space-around;
+    width: 95%;
+    margin-left: 22px;
+    margin-top:20%;
+    height: 50vh;
+    gap: 30px;
+}
+
+/* Weather Details Section */
+#weatherDetail {
+    width: 30%;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+}
+
+#weatherDetail .upper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+#weatherDetail .upper .timeZone {
+    font-size: 1.25rem;
+}
+
+#weatherDetail .upper .weatherIcon {
+    text-align: center;
+}
+
+#weatherDetail .upper .weatherIcon .iconimg {
+    margin-top: -25px;
+    margin-bottom: -25px;
+}
+
+#weatherDetail #info {
+    text-align: center;
+}
+
+#info h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+
+#info p {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Weather Map Section */
+#weatherMap {
+    width: 50%;
+    margin-top: 20px;
+}
+
+#weatherMap iframe {
+    width: 100%;
+    height: 100%;
+    border: 5px solid #404040;
+    border-radius: 16px;
+}
+
+/* Forecast Cards Section */
+.weatherBottom {
+    display: flex;
+    justify-content: space-evenly;
+    width: 77%;
+    margin: 30px auto;
+    padding: 15px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+}
+
+.weatherBottom .forecastCards {
+    text-align: center;
+    border-radius: 16px;
+    background-color: rgba(54, 53, 53, 0.7);
+    padding: 10px;
+    flex: 1;
+}
+
+.weatherBottom .forecastCards h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5rem;
+}
+
+.forecastCards img + p {
+    margin: 10px 0;
+}
+
+.weatherBottom #minMaxTemp {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+/* To-Do List and Alarm Section */
+#tasksAndAlarms {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+}
+
+.tasks-and-alarms-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+}
+
+.tasks-and-alarms-container h3 {
+    font-size: 1.5rem;
+}
+
+.todo-list,
+.alarm {
+    width: 45%;
+}
+
+.todo-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-list li {
+    background-color: rgba(54, 53, 53, 0.7);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-list button {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.todo-list button:hover {
+    background-color: #c9302c;
+}
+
+.todo-list input,
+.alarm input {
+    width: calc(100% - 0px);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.alarm button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5bc0de;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.alarm button:hover {
+    background-color: #31b0d5;
+}
+
+#alarmMessage {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+/* Weather Tips Section */
+#weatherTips {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+}
+
+#weatherTips h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#weatherTips ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+#weatherTips ul li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Weather Fun Facts Section */
+#weatherFunFacts {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+}
+
+#weatherFunFacts h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#weatherFunFacts #funFactsContent {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Detailed Forecast Section */
+#detailedForecast {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+}
+
+#detailedForecast h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#forecastContent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.forecastDay {
+    background-color: rgba(54, 53, 53, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1 1 calc(20% - 20px);
+    text-align: center;
+}
+
+.forecastDay h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.forecastDay p {
+    font-size: 1rem;
+}
+
+/* Severe Weather Alerts Section */
+#weatherAlerts {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+}
+
+#weatherAlerts h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#alertsContent {
+    font-size: 1rem;
+}
+
+.alert {
+    background-color: rgba(54, 53, 53, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.alert h3 {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+
+.alert p {
+    margin: 0;
+}
+#distanceAndHours {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+    text-align: center;
+}
+
+.distance-hours-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.distance-hours-container input {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 80%;
+}
+
+.distance-hours-container button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#distanceHoursResult {
+    margin-top: 20px;
+}
+/* Footer Styling */
+footer {
+    width: 100%;
+    background-color: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    position: absolute;
+    margin-bottom: 0;
+    left: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+/* About Us Section Styling */
+#aboutUs {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: rgba(67, 66, 66, 0.8);
+    border-radius: 16px;
+    color: #fff;
+    width: 77%;
+    text-align: center;
+}
+
+#aboutUs .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#aboutUs h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+#aboutUs p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}

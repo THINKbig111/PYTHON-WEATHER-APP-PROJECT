@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'weather_app/reg.css' %}">
+</head>
+<body>
+    <h1 class="init">Kintha Weather App</h1>
+    <div class="All">
+        <div class="all"><br>
+            <h1 class="zo">Sign Up</h1><br>
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <input type="text" name="first_name" placeholder="Enter your firstname"><br><br>
+                <input type="text" name="last_name" placeholder="Enter your lastname"><br><br>
+                <input type="text" name="email" placeholder="Enter your email"><br><br>
+                <input type="password" name="password" placeholder="Enter your password"><br><br><br>
+                <button type="submit" class="btn">Sign Up</button>
+                <a href="{% url 'home' %}"><button type="button" class="butt">Sign In</button></a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

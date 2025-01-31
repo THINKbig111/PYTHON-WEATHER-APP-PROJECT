@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{% static 'weather_app/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><h1>Weather Today</h1></li>
+                <li><img src="{% static 'weather_app/icons8-sun.gif' %}" alt="Sun Icon"></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+            {% if user.is_authenticated %}
+                <div class="user-welcome">
+                    <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+                    <a href="{% url 'index' %}"><i class="fa fa-arrow-left"></i>
+                    </a>
+                </div>
+            {% else %}
+                <div class="user-auth-links">
+                    <a href="{% url 'login' %}">Login</a> |
+                    <a href="{% url 'signup' %}">Sign Up</a>
+                </div>
+            {% endif %}
+        </nav>
+    </header>
+
+    <section id="profileUpdate">
+        <h2>Update Profile</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Changes</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Kintha Weather App</p>
+    </footer>
+</body>
+</html>

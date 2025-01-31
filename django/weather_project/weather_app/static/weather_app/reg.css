@@ -1,0 +1,72 @@
+body{
+
+    background-image: url("/static/weather_app/clear.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+    .zo{
+        color: rgb(2, 7, 7);
+
+    }
+    input{
+        width: 260px;
+        height: 35px;
+        margin-left: 70px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    .all{
+        margin-left: 500px;
+        margin-top: 80px;
+        height: 460px;
+        background-color: transparent;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        width: 400px;
+        border-radius: 10px;
+    }
+    h1{
+        margin-left: 130px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .btn{
+        width: 120px;
+        height: 30px;
+        margin-left: 70px;
+        border-radius: 10px;
+        border: none;
+        background-color: orange;
+        cursor: pointer;
+        color: black;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+    }
+    :hover.btn {
+        background-color: rgb(255, 182, 46);
+    }
+    .man{
+        margin-left: 75px;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+    .butt{
+        width: 120px;
+        height: 30px;
+        border-radius: 10px;
+        border: none;
+        background-color: orange;
+        cursor: pointer;
+        color: black;
+        position: absolute;
+        margin-left: 20px;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+    }
+    .init{
+        color: white ;
+        margin-left: 525px;
+    }

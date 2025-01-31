@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="{% static 'weather_app/mans.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><h1>Weather Today</h1></li>
+                <li><img src="{% static 'weather_app/icons8-sun.gif' %}" alt=""></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+
+
+            {% if user.is_authenticated %}
+                <div class="user-welcome">
+                    <p>Welcome, {{ user.first_name }} {{ user.last_name }}!</p>
+
+                    <a href="{% url 'profile_update' %}" ><i class="fa fa-cog"></i>
+                    </a>
+                </div> <!-- Link to profile update page -->
+
+            {% else %}
+                <div class="user-auth-links">
+                    <a href="{% url 'login' %}">Login</a> |
+                    <a href="{% url 'signup' %}">Sign Up</a>
+                </div>
+            {% endif %}
+        </nav>
+    </header>
+
+    <section id="searchSection">
+        <div class="search-bar">
+            <input type="search" placeholder="Search by city..." id="city">
+            <button id="btn"><ion-icon name="search-outline"></ion-icon></button>
+        </div>
+    </section>
+
+    <section id="current_Day_Time">
+        <div id="daytimeDiv"></div>
+    </section>
+
+    <div class="container">
+        <div id="weatherDetail">
+            <div class="upper">
+                <div class="timeZone"></div>
+                <div class="weatherIcon"></div>
+            </div>
+            <div id="info"></div>
+        </div>
+    </div>
+
+    <div class="weatherBottom"></div>
+
+    <section id="weatherTips">
+        <h2>Weather Tips</h2>
+        <ul id="tipsContent">
+            <li>Stay hydrated and drink plenty of water.</li>
+            <li>Wear light and breathable clothing during hot weather.</li>
+            <li>Keep an umbrella handy during rainy seasons.</li>
+            <li>Check weather updates regularly to plan your day.</li>
+            <li>Protect your skin with sunscreen in sunny weather.</li>
+        </ul>
+    </section>
+
+    <section id="weatherFunFacts">
+        <h2>Weather Fun Facts</h2>
+        <div id="funFactsContent">
+            <p id="funFact"></p>
+        </div>
+    </section>
+
+    <section id="detailedForecast">
+        <h2>Detailed Forecast</h2>
+        <div id="forecastContent"></div>
+    </section>
+
+    <section id="weatherAlerts">
+        <h2>Severe Weather Alerts</h2>
+        <div id="alertsContent"></div>
+    </section>
+
+     <!-- Distance Calculation Section -->
+ <section id="distanceAndHours">
+    <h2>Calculate Distance and Hours</h2>
+    <div class="distance-hours-container">
+        <input type="text" id="fromLocation" placeholder="From location...">
+        <input type="text" id="toLocation" placeholder="To location...">
+        <button id="calculateDistanceBtn">Calculate</button>
+        <div id="distanceHoursResult"></div>
+    </div>
+</section>
+
+    <script>
+    document.getElementById('calculateDistanceBtn').addEventListener('click', function() {
+        const fromLocation = document.getElementById('fromLocation').value;
+        const toLocation = document.getElementById('toLocation').value;
+        fetch(`/calculate-distance/?from=${encodeURIComponent(fromLocation)}&to=${encodeURIComponent(toLocation)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('distanceHoursResult').innerHTML = `<p>Error: ${data.error}</p>`;
+                } else {
+                    document.getElementById('distanceHoursResult').innerHTML = `<p>Distance: ${data.distance}</p><p>Duration: ${data.duration}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('distanceHoursResult').innerHTML = `<p>Error fetching data.</p>`;
+            });
+    });
+</script>
+
+
+<section id="tasksAndAlarms">
+    <h2>To-Do List and Alarm</h2>
+    <div class="tasks-and-alarms-container">
+        <div class="todo-list">
+            <h3>To-Do List</h3>
+            <ul id="todoList">
+                <li>Sample Task <button onclick="removeTask(this)">Remove</button></li>
+            </ul>
+            <input type="text" id="todoInput" placeholder="Add new task...">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <div class="alarm">
+            <h3>Set Alarm</h3>
+            <input type="time" id="alarmTime">
+            <input type="text" id="alarmMessageInput" placeholder="Enter alarm message...">
+            <button onclick="setAlarm()">Set Alarm</button>
+            <p id="alarmMessage"></p>
+            <audio id="alarmSound" src="{% static 'weather_app/alarm-sound.mp3' %}" preload="auto"></audio>
+        </div>
+    </div>
+</section>
+
+    <script src="{% static 'weather_app/script.js' %}"></script>
+    <script>
+        document.getElementById('btn').addEventListener('click', function() {
+            const city = document.getElementById('city').value;
+            fetchWeatherData(city);
+        });
+
+        function fetchWeatherData(city) {
+            const mockApiResponse = {
+                weather: [{ description: 'clear sky' }],
+                main: { temp: 25 },
+                timezone: 3600,
+                name: 'Sample City',
+                forecast: [
+                    { day: 'Monday', temp: 26, desc: 'Sunny' },
+                    { day: 'Tuesday', temp: 28, desc: 'Partly Cloudy' },
+                    { day: 'Wednesday', temp: 24, desc: 'Rainy' },
+                    { day: 'Thursday', temp: 22, desc: 'Thunderstorms' },
+                    { day: 'Friday', temp: 25, desc: 'Sunny' }
+                ],
+                alerts: [
+                    { title: 'Heat Advisory', description: 'High temperatures expected. Stay hydrated.' }
+                ]
+            };
+            updateUI(mockApiResponse);
+        }
+
+        function updateUI(data) {
+            const weatherDesc = data.weather[0].description;
+            const body = document.body;
+
+            if (weatherDesc.includes('clear')) {
+                body.style.backgroundImage = "url('{% static 'weather_app/clear.jpg' %}')";
+            } else if (weatherDesc.includes('cloud')) {
+                body.style.backgroundImage = "url('{% static 'weather_app/cloudy.jpg' %}')";
+            } else if (weatherDesc.includes('rain')) {
+                body.style.backgroundImage = "url('{% static 'weather_app/rain.jpg' %}')";
+            } else if (weatherDesc.includes('snow')) {
+                body.style.backgroundImage = "url('{% static 'weather_app/snow.jpg' %}')";
+            } else {
+                body.style.backgroundImage = "url('{% static 'weather_app/cloudy.jpg' %}')";
+            }
+
+            updateForecast(data.forecast);
+            updateAlerts(data.alerts);
+        }
+
+        const funFacts = [
+            "The highest temperature ever recorded on Earth was 134°F (56.7°C) in Death Valley, California, USA.",
+            "The coldest temperature ever recorded on Earth was -128.6°F (-89.2°C) at Vostok Station, Antarctica.",
+            "Lightning can heat the air to around 30,000°C, which is five times hotter than the surface of the sun.",
+            "Hurricanes can release the energy equivalent of 10 atomic bombs per second.",
+            "Rain contains vitamin B12, which is produced by microorganisms in the atmosphere."
+        ];
+
+        function displayRandomFunFact() {
+            const randomIndex = Math.floor(Math.random() * funFacts.length);
+            document.getElementById('funFact').innerText = funFacts[randomIndex];
+        }
+
+        window.onload = function() {
+            displayRandomFunFact();
+            setInterval(displayRandomFunFact, 20000);
+        };
+
+        function updateForecast(forecast) {
+            const forecastContent = document.getElementById('forecastContent');
+            forecastContent.innerHTML = '';
+            forecast.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'forecastDay';
+                dayElement.innerHTML = `<h3>${day.day}</h3><p>${day.temp}°C - ${day.desc}</p>`;
+                forecastContent.appendChild(dayElement);
+            });
+        }
+
+        function updateAlerts(alerts) {
+            const alertsContent = document.getElementById('alertsContent');
+            alertsContent.innerHTML = '';
+            if (alerts.length > 0) {
+                alerts.forEach(alert => {
+                    const alertElement = document.createElement('div');
+                    alertElement.className = 'alert';
+                    alertElement.innerHTML = `<h3>${alert.title}</h3><p>${alert.description}</p>`;
+                    alertsContent.appendChild(alertElement);
+                });
+            } else {
+                alertsContent.innerHTML = '<p>No severe weather alerts at this time.</p>';
+            }
+        }
+
+
+
+        function addTask() {
+            const todoInput = document.getElementById('todoInput');
+            const task = todoInput.value.trim();
+            if (task !== "") {
+                const li = document.createElement('li');
+                li.innerHTML = `${task} <button onclick="removeTask(this)">Remove</button>`;
+                document.getElementById('todoList').appendChild(li);
+                todoInput.value = "";
+            }
+        }
+
+        function removeTask(button) {
+            const li = button.parentNode;
+            li.parentNode.removeChild(li);
+        }
+
+        function setAlarm() {
+            const alarmTime = document.getElementById('alarmTime').value;
+            const alarmMessage = document.getElementById('alarmMessage');
+            const alarmMessageInput = document.getElementById('alarmMessageInput').value;
+            const alarmSound = document.getElementById('alarmSound');
+
+            if (alarmTime) {
+                alarmMessage.innerText = `Alarm set for ${alarmTime}`;
+                const alarmDate = new Date();
+                const [hours, minutes] = alarmTime.split(':');
+                alarmDate.setHours(hours, minutes, 0);
+                const now = new Date();
+                const timeToAlarm = alarmDate - now;
+                if (timeToAlarm >= 0) {
+                    setTimeout(() => {
+                        if (alarmMessageInput) {
+                            alert(alarmMessageInput);
+                        } else {
+                            alert('Alarm ringing!');
+                        }
+                        alarmSound.play();
+                        alarmMessage.innerText = '';
+                    }, timeToAlarm);
+                } else {
+                    alarmMessage.innerText = 'Please set a future time for the alarm.';
+                }
+            } else {
+                alarmMessage.innerText = 'Please set a valid time for the alarm.';
+            }
+        }
+
+    </script>
+
+
+    <footer>
+        <p>&copy; 2024 Kintha Weather App</p>
+    </footer>
+</body>
+</html>
+
+
+
+
